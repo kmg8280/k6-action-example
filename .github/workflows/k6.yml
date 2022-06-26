@@ -1,0 +1,24 @@
+name: Local Test
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  k6:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v3
+
+      - name: Run k6 local test
+        uses: grafana/k6-action@v0.2.0
+        with:
+          filename: k6/script.js
+
+      - name: Upload k6 test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: k6-report
+          path: report.json
